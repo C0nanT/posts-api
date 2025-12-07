@@ -1,4 +1,4 @@
-package com.posts.api.domain.post;
+package com.posts.api.domains.type;
 
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -7,29 +7,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.GeneratedValue;
 import java.util.UUID;
-import com.posts.api.domain.type.Type;
 
-@Table(name = "posts")
+@Table(name = "types")
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
-
+public class Type {
     @Id
     @GeneratedValue()
     private UUID id;
 
-    private String title;
-    private String content;
-    private String image_url;
-
-    @ManyToOne
-    @JoinColumn(name = "type_id")
-    private Type type;
+    private String name;
 }

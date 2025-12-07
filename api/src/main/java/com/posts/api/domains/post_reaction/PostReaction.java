@@ -1,4 +1,4 @@
-package com.posts.api.domain.post_reaction;
+package com.posts.api.domains.post_reaction;
 
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
