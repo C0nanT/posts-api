@@ -1,0 +1,13 @@
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+CREATE TABLE posts (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    title VARCHAR(50) NOT NULL,
+    content TEXT NOT NULL,
+    image_url VARCHAR(255),
+    type_id UUID NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (type_id) REFERENCES types(id) ON DELETE RESTRICT
+);
