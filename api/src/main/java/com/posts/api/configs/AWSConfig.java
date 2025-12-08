@@ -1,4 +1,4 @@
-package com.posts.api.config;
+package com.posts.api.configs;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
