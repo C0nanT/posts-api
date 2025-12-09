@@ -20,13 +20,14 @@ public class PostController {
     private PostService postService;
 
     @PostMapping(consumes = "multipart/form-data")
-    public ResponseEntity<Post> create(
-            @RequestParam String title,
-            @RequestParam String content,
-            @RequestParam MultipartFile image,
-            @RequestParam String type_name) {
+    public ResponseEntity<Post> store(
+        @RequestParam String title,
+        @RequestParam String content,
+        @RequestParam MultipartFile image,
+        @RequestParam String type_name
+    ) {
         PostRequestDTO body = new PostRequestDTO(title, content, image, type_name);
-        Post newPost = this.postService.createPost(body);
+        Post newPost = this.postService.store(body);
         return ResponseEntity.ok(newPost);
     }
 }

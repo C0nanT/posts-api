@@ -36,8 +36,7 @@ public class PostService {
      * @param data Post data
      * @return Created post
      */
-    public Post createPost(PostRequestDTO data) {
-
+    public Post store(PostRequestDTO data) {
         String imageUrl = null;
 
         if (data.image() != null) {
