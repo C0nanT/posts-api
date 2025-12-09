@@ -23,14 +23,15 @@ public class PostService {
 
     /**
      * Create a new post
+     * 
      * @param data Post data
      * @return Created post
      */
     public Post createPost(PostRequestDTO data) {
-        
+
         String imageUrl = null;
-        
-        if(data.image() != null){
+
+        if (data.image() != null) {
             imageUrl = this.uploadImage(data.image());
         }
 
@@ -42,9 +43,9 @@ public class PostService {
         return post;
     }
 
-    
     /**
      * Upload image to storage and return the URL
+     * 
      * @param image Image file
      * @return URL of the uploaded image
      */
@@ -63,7 +64,7 @@ public class PostService {
                 file.delete();
             }
         }
-        
+
         return amazonS3.getUrl(awsBucketName, imageName).toString();
     }
 
@@ -74,5 +75,4 @@ public class PostService {
         fos.close();
         return convertedFile;
     }
-
 }
