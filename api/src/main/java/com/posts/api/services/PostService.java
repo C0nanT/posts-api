@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.posts.api.domains.post.Post;
 import com.posts.api.domains.post.PostRequestDTO;
+import com.posts.api.repositories.PostRepository;
+
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.amazonaws.services.s3.AmazonS3;
@@ -21,6 +23,9 @@ public class PostService {
     @Autowired
     private AmazonS3 amazonS3;
 
+    @Autowired
+    private PostRepository postRepository;
+
     /**
      * Create a new post
      * 
@@ -35,12 +40,12 @@ public class PostService {
             imageUrl = this.uploadImage(data.image());
         }
 
-        Post post = new Post();
-        post.setTitle(data.title());
-        post.setContent(data.content());
-        post.setImage_url(imageUrl);
+        Post newPost = new Post();
+        newPost.setTitle(data.title());
+        newPost.setContent(data.content());
+        newPost.setImage_url(imageUrl);
 
-        return post;
+        return postRepository.save(newPost);
     }
 
     /**
