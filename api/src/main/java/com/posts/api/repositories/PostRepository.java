@@ -6,5 +6,4 @@ import com.posts.api.domains.post.Post;
 import java.util.UUID;
 
 public interface PostRepository extends JpaRepository<Post, UUID> {
-    void deleteAllByTypeId(UUID typeId);
 }
