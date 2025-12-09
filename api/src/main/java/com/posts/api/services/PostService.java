@@ -4,16 +4,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.posts.api.domains.post.Post;
 import com.posts.api.domains.post.PostRequestDTO;
+import com.posts.api.domains.post.PostResponseDTO;
 import com.posts.api.domains.type.Type;
 import com.posts.api.repositories.PostRepository;
 
+import java.util.List;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import com.amazonaws.services.s3.AmazonS3;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 @Service
 public class PostService {
@@ -53,6 +59,18 @@ public class PostService {
         newPost.setType(type);
 
         return postRepository.save(newPost);
+    }
+
+    public List<PostResponseDTO> index(int page, int perPage) {
+        Pageable pageable = PageRequest.of(page, perPage);
+        Page<Post> posts = postRepository.findAll(pageable);
+        return posts.map(post -> new PostResponseDTO(
+            post.getId(),
+            post.getTitle(),
+            post.getContent(),
+            post.getImage_url(),
+            post.getType().getName()
+        )).getContent();
     }
 
     /**

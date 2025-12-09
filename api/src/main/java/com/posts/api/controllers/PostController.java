@@ -11,9 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.posts.api.domains.post.PostRequestDTO;
 import com.posts.api.services.PostService;
 import com.posts.api.domains.post.Post;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.posts.api.domains.post.PostResponseDTO;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/post")
+@RequestMapping("/api/posts")
 public class PostController {
 
     @Autowired
@@ -30,4 +34,14 @@ public class PostController {
         Post newPost = this.postService.store(body);
         return ResponseEntity.ok(newPost);
     }
+
+    @GetMapping()
+    public ResponseEntity<List<PostResponseDTO>> index(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int per_page
+    ) {
+        List<PostResponseDTO> allPosts = this.postService.index(page, per_page);
+        return ResponseEntity.ok(allPosts);
+    }
+
 }
