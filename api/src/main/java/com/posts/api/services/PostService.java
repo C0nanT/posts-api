@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.posts.api.domains.post.Post;
 import com.posts.api.domains.post.PostRequestDTO;
+import com.posts.api.domains.type.Type;
 import com.posts.api.repositories.PostRepository;
 
 import java.util.UUID;
@@ -26,6 +27,9 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private TypeService typeService;
+
     /**
      * Create a new post
      * 
@@ -40,10 +44,14 @@ public class PostService {
             imageUrl = this.uploadImage(data.image());
         }
 
+        // Find or create the type
+        Type type = typeService.findOrCreateType(data.type_name());
+
         Post newPost = new Post();
         newPost.setTitle(data.title());
         newPost.setContent(data.content());
         newPost.setImage_url(imageUrl);
+        newPost.setType(type);
 
         return postRepository.save(newPost);
     }
