@@ -12,6 +12,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.GeneratedValue;
 import java.util.Date;
 import java.util.UUID;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.posts.api.domains.type.Type;
 
@@ -30,7 +32,11 @@ public class Post {
     private String title;
     private String content;
     private String image_url;
+    
+    @CreationTimestamp
     private Date created_at;
+    
+    @UpdateTimestamp
     private Date updated_at;
 
     @ManyToOne
