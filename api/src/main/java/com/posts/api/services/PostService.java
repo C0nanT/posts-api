@@ -61,9 +61,16 @@ public class PostService {
         return postRepository.save(newPost);
     }
 
-    public List<PostResponseDTO> index(int page, int perPage) {
+    public List<PostResponseDTO> index(int page, int perPage, String typeName) {
         Pageable pageable = PageRequest.of(page, perPage);
-        Page<Post> posts = postRepository.findAll(pageable);
+        Page<Post> posts;
+
+        if (typeName != null && !typeName.trim().isEmpty()) {
+            posts = postRepository.findByTypeNameIgnoreCase(typeName.trim(), pageable);
+        } else {
+            posts = postRepository.findAll(pageable);
+        }
+
         return posts.map(post -> new PostResponseDTO(
             post.getId(),
             post.getTitle(),

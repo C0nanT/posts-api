@@ -38,9 +38,10 @@ public class PostController {
     @GetMapping()
     public ResponseEntity<List<PostResponseDTO>> index(
         @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int per_page
+        @RequestParam(defaultValue = "10") int per_page,
+        @RequestParam(required = false) String type
     ) {
-        List<PostResponseDTO> allPosts = this.postService.index(page, per_page);
+        List<PostResponseDTO> allPosts = this.postService.index(page, per_page, type);
         return ResponseEntity.ok(allPosts);
     }
 
