@@ -23,6 +23,15 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    /**
+     * Create a new post
+     * 
+     * @param title     Post title
+     * @param content   Post content
+     * @param image     Post image
+     * @param type_name Post type name
+     * @return Created post
+     */
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<Post> store(
         @RequestParam String title,
@@ -35,6 +44,14 @@ public class PostController {
         return ResponseEntity.ok(newPost);
     }
 
+    /**
+     * Get a paginated list of posts, optionally filtered by type name
+     * 
+     * @param page     Page number
+     * @param per_page Number of items per page
+     * @param type     Optional type name to filter by
+     * @return List of PostResponseDTO
+     */
     @GetMapping()
     public ResponseEntity<List<PostResponseDTO>> index(
         @RequestParam(defaultValue = "0") int page,
