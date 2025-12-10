@@ -28,7 +28,6 @@ public class TypeService {
             return existingType.get();
         }
 
-        // Create new type if it doesn't exist
         Type newType = new Type();
         newType.setName(typeName);
 
