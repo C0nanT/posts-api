@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.GeneratedValue;
+import java.util.Date;
 import java.util.UUID;
 
 import com.posts.api.domains.type.Type;
@@ -29,6 +30,8 @@ public class Post {
     private String title;
     private String content;
     private String image_url;
+    private Date created_at;
+    private Date updated_at;
 
     @ManyToOne
     @JoinColumn(name = "type_id")

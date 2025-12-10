@@ -84,7 +84,9 @@ public class PostService {
             post.getTitle(),
             post.getContent(),
             post.getImage_url(),
-            post.getType().getName()
+            post.getType().getName(),
+            post.getCreated_at(),
+            post.getUpdated_at()
         )).getContent();
     }
 
