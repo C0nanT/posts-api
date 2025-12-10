@@ -8,5 +8,12 @@ import org.springframework.data.domain.Pageable;
 import java.util.UUID;
 
 public interface PostRepository extends JpaRepository<Post, UUID> {
+    /**
+     * Find posts by type name (case insensitive) with pagination
+     * 
+     * @param typeName Type name to filter by
+     * @param pageable Pagination information
+     * @return Page of posts matching the type name
+     */
     Page<Post> findByTypeNameIgnoreCase(String typeName, Pageable pageable);
 }

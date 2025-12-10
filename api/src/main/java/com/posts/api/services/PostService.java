@@ -61,6 +61,14 @@ public class PostService {
         return postRepository.save(newPost);
     }
 
+    /**
+     * Get a paginated list of posts, optionally filtered by type name
+     * 
+     * @param page     Page number
+     * @param perPage  Number of items per page
+     * @param typeName Optional type name to filter by
+     * @return List of PostResponseDTO
+     */
     public List<PostResponseDTO> index(int page, int perPage, String typeName) {
         Pageable pageable = PageRequest.of(page, perPage);
         Page<Post> posts;
@@ -105,6 +113,13 @@ public class PostService {
         return amazonS3.getUrl(awsBucketName, imageName).toString();
     }
 
+    /**
+     * Convert MultipartFile to File
+     * 
+     * @param file MultipartFile
+     * @return Converted File
+     * @throws IOException
+     */
     private File convertMultiPartToFile(MultipartFile file) throws IOException {
         File convertedFile = new File(file.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(convertedFile);
