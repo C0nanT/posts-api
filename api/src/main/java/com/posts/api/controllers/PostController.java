@@ -10,11 +10,17 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.posts.api.domains.post.PostRequestDTO;
 import com.posts.api.services.PostService;
+import com.posts.api.services.PostReactionService;
 import com.posts.api.domains.post.Post;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.posts.api.domains.post.PostResponseDTO;
+import com.posts.api.domains.post_reaction.EnumReactionType;
+import com.posts.api.domains.post_reaction.PostReactionResponseDTO;
 import java.util.List;
+import java.util.UUID;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/api/posts")
@@ -22,6 +28,9 @@ public class PostController {
 
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private PostReactionService postReactionService;
 
     /**
      * Create a new post
@@ -61,5 +70,42 @@ public class PostController {
         List<PostResponseDTO> allPosts = this.postService.index(page, per_page, type);
         return ResponseEntity.ok(allPosts);
     }
+
+    /**
+     * Add a vote/reaction to a specific post
+     * 
+     * @param postId Post ID
+     * @param reactionType Reaction type (UPVOTE, DOWNVOTE, NEUTRAL)
+     * @return PostReactionResponseDTO
+     */
+    @PostMapping("/{postId}/vote")
+    public ResponseEntity<PostReactionResponseDTO> addVote(
+        @PathVariable UUID postId,
+        @RequestParam EnumReactionType reactionType
+    ) {
+        try {
+            PostReactionResponseDTO reaction = postReactionService.addVote(postId, reactionType);
+            return ResponseEntity.ok(reaction);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    /**
+     * Get vote statistics for a specific post
+     * 
+     * @param postId Post ID
+     * @return Map with vote statistics
+     */
+    @GetMapping("/{postId}/votes")
+    public ResponseEntity<java.util.Map<String, Long>> getVoteStatistics(@PathVariable UUID postId) {
+        try {
+            java.util.Map<String, Long> statistics = postReactionService.getVoteStatistics(postId);
+            return ResponseEntity.ok(statistics);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
 
 }
